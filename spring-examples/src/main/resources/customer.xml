@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+    <bean class="com.example.customers.controllers.CustomerController">
+        <!-- collaborators and configuration for this bean go here -->
+        <property name="customerService" ref="customerServiceBean"/>
+    </bean>
+
+    <bean id="customerServiceBean" class="com.example.customers.services.CustomerService">
+        <!-- collaborators and configuration for this bean go here -->
+        <!--        <property name="customerRepository" ref="customerRepositoryBean"/>-->
+        <constructor-arg index="0" ref="customerRepositoryBean"/>
+    </bean>
+
+    <bean id="customerRepositoryBean" class="com.example.customers.daos.CustomerRepository">
+        <!-- collaborators and configuration for this bean go here -->
+    </bean>    <!-- more bean definitions go here -->
+
+    <!--    properties injection-->
+    <!--    using context for properties-->
+    <!--    <context:property-placeholder location="classpath:props/database.properties"/>-->
+    <!--    <bean id="databaseConfigBean" class="com.example.customer.config.DatabaseConfig">-->
+    <!--          <property name="driverClassName" value="${jdbc.driverClassName}"/>-->
+    <!--          <property name="url" value="${jdbc.url}"/>-->
+    <!--          <property name="username" value="${jdbc.username}"/>-->
+    <!--          <property name="password" value="${jdbc.password}"/>-->
+    <!--    </bean>-->
+
+    <bean id = "databaseConfigBean" class="com.example.customers.config.DatabaseConfig">
+        <constructor-arg index="0" value="org.hsqldb.jdbcDriver"/>
+        <constructor-arg value="jdbc:hsqldb:hsql://database.dev:9002"/>
+        <constructor-arg value="sa"/>
+        <constructor-arg value="root"/>
+    </bean>
+
+</beans>
