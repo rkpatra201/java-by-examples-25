@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- BankAccount with required constructor value -->
+    <bean id="bankAccountBean" class="com.example.bank.models.BankAccount">
+        <constructor-arg value="deposit"/>
+    </bean>
+
+    <!-- BankRepository depends on BankAccount -->
+    <bean id="bankRepositoryBean" class="com.example.bank.daos.BankRepository">
+        <constructor-arg ref="bankAccountBean"/>
+    </bean>
+
+
+    <!-- BankController with setter-based injection of BankService -->
+    <bean class="com.example.bank.controller.BankController">
+        <property name="bankService" ref="bankServiceBean"/>
+    </bean>
+
+    <!-- BankService depends on BankRepository -->
+    <bean id="bankServiceBean" class="com.example.bank.service.BankService">
+        <constructor-arg ref="bankRepositoryBean"/>
+    </bean>
+
+</beans>
